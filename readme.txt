@@ -31,7 +31,14 @@ This section describes how to install the plugin and get it working.
 Please read this article for further assistance: http://wpfirstaid.com/2009/12/plugin-installation/
 
 == Frequently Asked Questions ==
-No questions have been asked.
+= Q: What classes does this plugin add? =
+A: The plugin adds:
+
+* .theme-< template-name >
+* .child-theme-< stylesheet-name >
+* .plugin-bns-body-classes
+
+Version 0.2 also introduced the option to add custom classes, too.
 
 == Screenshots ==
 No screenshots are available.
