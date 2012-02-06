@@ -4,7 +4,7 @@ Donate Link: http://buynowshop.com/
 Tags: CSS, body
 Requires at least: 3.0
 Tested Up To: 3.3.1
-Stable Tag: 0.2
+Stable Tag: 0.2.1
 
 Simple plugin that adds classes to the `body_class` output upon activation.
 
@@ -31,14 +31,7 @@ This section describes how to install the plugin and get it working.
 Please read this article for further assistance: http://wpfirstaid.com/2009/12/plugin-installation/
 
 == Frequently Asked Questions ==
-= Q: What classes does this plugin add? =
-A: The plugin adds:
-
-* .theme-< template-name >
-* .child-theme-< stylesheet-name >
-* .plugin-bns-body-classes
-
-Version 0.2 also introduced the option to add custom classes, too.
+No questions have been asked.
 
 == Screenshots ==
 No screenshots are available.
@@ -69,6 +62,9 @@ No screenshots are available.
 Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 0.2.1 =
+* Corrected issue with initial empty array being fed to the `implode` function
+
 = 0.2 =
 * Add options page to include custom classes
 
