@@ -3,7 +3,7 @@
 Plugin Name: BNS Body Classes
 Plugin URI: http://buynowshop.com/plugins/bns-body-classes/
 Description: Simple plugin that adds classes to the `body_class` output upon activation, including a full list of date classes.
-Version: 0.3
+Version: 0.4
 Text Domain: bns-bc
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
@@ -14,8 +14,9 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 /**
  * BNS Body Classes
  *
- * Simple plugin that adds classes to the `body_class` output upon activation, including: a full list of date classes;
- * holiday classes ... and more to follow.
+ * Simple plugin that adds classes to the `body_class` output upon activation,
+ * including: a full list of date related classes; a few holiday classes; and,
+ * a generic sample full calendar extension.
  *
  * @package     BNS_Body_Classes
  *
@@ -23,7 +24,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @link        https://github.com/Cais/bns-body-classes/
  * @link        http://wordpress.org/extend/plugins/bns-body-classes
  *
- * @version     0.3
+ * @version     0.4
  *
  * @author      Edward Caissie <edward.caissie@gmail.com>
  * @copyright   Copyright (c) 2012, Edward Caissie
@@ -54,6 +55,10 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
  * @version 0.3
  * @date    December 1, 2012
+ *
+ * @version 0.4
+ * @date    December 11, 2012
+ * Add generic sample calendar extension
  */
 
 class BNS_Body_Classes {
@@ -74,9 +79,6 @@ class BNS_Body_Classes {
      * @param   $classes
      *
      * @return  array - $classes, an array of classes to be added to `body_class`
-     *
-     * @todo add seasonal classes
-     * @todo add more holiday classes
      */
 
     function bns_body_classes( $classes ) {
@@ -96,6 +98,10 @@ class BNS_Body_Classes {
 
         /** Add Holiday Classes */
         $classes[] = $this->holidays();
+
+        /** @var $more_classes - for additional classes from extensions */
+        $more_classes = apply_filters( 'bnsbc_more_classes', '' );
+        $classes[] .= $more_classes;
 
         /** @var $classes - overwrite the body classes at the last minute class additions? */
         $classes = apply_filters( 'bns_body_classes', $classes );
@@ -148,12 +154,17 @@ class BNS_Body_Classes {
 
     /**
      * Holidays
-     * Holiday related classes
+     * Common Holidays and Observances related classes
      *
      * @package BNS_Body_Classes
      * @since   0.3
      *
      * @return string
+     *
+     * @version 0.4
+     * @date    December 13, 2012
+     * Added more common dates: Valentine's Day, St. Patrick's Day, April Fool's
+     * Day, Halloween, Remembrance Day
      */
     function holidays() {
         /** @var $holidays - initialize as no holidays */
@@ -165,6 +176,31 @@ class BNS_Body_Classes {
         }
         if ( ( '01' == date( 'm' ) ) && ( '01' == date( 'd' ) ) ) {
             $holidays .= ' new-years new-years-day';
+        }
+
+        /** Valentine's Day */
+        if ( ( '02' == date( 'm' ) ) && ( '14' == date( 'd' ) ) ) {
+            $holidays .= ' valentines-day saint-valentines-day';
+        }
+
+        /** St. Patrick's Day */
+        if ( ( '03' == date( 'm' ) ) && ( '17' == date( 'd' ) ) ) {
+            $holidays .= ' st-patricks-day';
+        }
+
+        /** April Fool's Day */
+        if ( ( '04' == date( 'm' ) ) && ( '01' == date( 'd' ) ) ) {
+            $holidays .= ' april-fools-day';
+        }
+
+        /** Halloween */
+        if ( ( '10' == date( 'm' ) ) && ( '31' == date( 'd' ) ) ) {
+            $holidays .= ' halloween';
+        }
+
+        /** Remembrance Day */
+        if ( ( '11' == date( 'm' ) ) && ( '11' == date( 'd' ) ) ) {
+            $holidays .= ' remembrance-day poppy-day armistice-day veterans-day';
         }
 
         /** Christmas */
@@ -182,4 +218,9 @@ class BNS_Body_Classes {
 $bns_body_classes = new BNS_Body_Classes();
 
 /** Add BNSBC Options */
-include 'bnsbc-options.php';
+include( 'bnsbc-options.php' );
+
+/** Add BNSBC Calendar if it is available */
+if ( is_readable( plugin_dir_path( __FILE__ ) . 'bnsbc-calendar.php' ) ) {
+    include( 'bnsbc-calendar.php' );
+}

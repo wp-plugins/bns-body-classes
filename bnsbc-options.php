@@ -18,64 +18,123 @@
  *
  * Thanks to Samuel Wood aka Otto42 and his post at http://ottopress.com/2009/wordpress-settings-api-tutorial
  *
- * Last revised February 6, 2012
  * @version     0.2.1
+ * @date        February 6, 2012
  * Corrected issue with initial empty array being fed to the `implode` function
  *
- * @todo Fix the copy-pasta look of this file
- * @todo Complete the documentation for each function
+ * @version     0.4
+ * @date        December 12, 2012
+ * Refactored to more appropriate naming conventions
+ *
  * @todo Add more options
- * @todo Make i18n compatible
  * @todo Sort out validations required (CSS class cannot start with a number, etc.)
  */
 
-// add the admin options page
-add_action( 'admin_menu', 'plugin_admin_add_page' );
-function plugin_admin_add_page() {
-    add_options_page( 'BNS Body Classes Settings', 'BNS Body Classes Settings', 'manage_options', 'plugin', 'plugin_options_page' );
+/**
+ * BNSBC Add Admin Page
+ * Add the admin options page
+ *
+ * @package     BNS_Body_Classes
+ * @subpackage  BNSBC_Options
+ *
+ * @uses        add_options_page
+ */
+function bnsbc_add_admin_page() {
+    add_options_page(
+        'BNS Body Classes',
+        'BNS Body Classes',
+        'manage_options',
+        'bnsbc',
+        'bnsbc_options_page'
+    );
 }
+add_action( 'admin_menu', 'bnsbc_add_admin_page' );
 
 // display the admin options page
-function plugin_options_page() { ?>
+function bnsbc_options_page() { ?>
     <div>
-        <h2><?php _e ( 'BNS Body Classes Settings and Options', 'bns-bc' ); ?></h2>
-        <?php _e( 'Options relating to the BNS Body Classes Plugin.', 'bns-bc' ); ?>
+        <h2><?php _e ( 'BNS Body Classes Options and Settings', 'bns-bc' ); ?></h2>
+        <?php _e( 'Options and settings related to the BNS Body Classes plugin.', 'bns-bc' ); ?>
         <form action="options.php" method="post">
-            <?php settings_fields( 'plugin_options' ); ?>
-            <?php do_settings_sections( 'plugin' ); ?>
+            <?php
+            settings_fields( 'bnsbc_custom_classes' );
+            do_settings_sections( 'bnsbc' ); ?>
             <input name="Submit" type="submit" value="<?php esc_attr_e( 'Save Changes', 'bns-bc' ); ?>" />
         </form>
     </div>
 <?php }
 
-// add the admin settings and such
-add_action( 'admin_init', 'plugin_admin_init' );
-function plugin_admin_init(){
-    register_setting( 'plugin_options', 'plugin_options', 'plugin_options_validate' );
-    add_settings_section( 'plugin_main', 'Main Settings', 'plugin_section_text', 'plugin' );
-    add_settings_field( 'plugin_text_string', 'Plugin Text Input', 'plugin_setting_string', 'plugin', 'plugin_main' );
+/**
+ * BNSBC Admin Init
+ * Register option settings, sections, and inputs
+ *
+ * @package     BNS_Body_Classes
+ * @subpackage  BNS_Options
+ *
+ * @uses        register_setting
+ * @uses        add_settings_section
+ * @uses        add_settings_field
+ */
+function bnsbc_admin_init() {
+    /** Add Custom Classes Option */
+    register_setting(
+        'bnsbc_custom_classes',
+        'bnsbc_custom_classes_field',
+        'bnsbc_custom_classes_validator'
+    );
+    add_settings_section(
+        'add_custom_classes',
+        __( 'Add Custom Classes', 'bns-bc' ),
+        'add_custom_classes_text',
+        'bnsbc'
+    );
+    add_settings_field(
+        'custom_classes_text_string',
+        __( 'Custom Classes', 'bns-bc' ),
+        'custom_classes_input',
+        'bnsbc',
+        'add_custom_classes'
+    );
 }
+add_action( 'admin_init', 'bnsbc_admin_init' );
 
-function plugin_section_text() {
-    $text = 'Main description of this section here.';
+/**
+ * Add Custom Classes Text
+ * Displays as a message for the input field
+ */
+function add_custom_classes_text() {
+    $text = 'Enter your custom classes into the text field and click the "Save Changes" button.';
     printf( __( '<p>%1$s</p>', 'bns-bc' ), $text );
 }
 
-function plugin_setting_string() {
-    $options = get_option( 'plugin_options' );
-    echo "<input id='plugin_text_string' name='plugin_options[text_string]' size='40' type='text' value='{$options['text_string']}' />";
+/**
+ * Custom Classes Input
+ * The input field for the custom classes
+ *
+ * @uses    get_option
+ */
+function custom_classes_input() {
+    $options = get_option( 'bnsbc_custom_classes_field' );
+    echo "<input id='custom_classes_text_string' name='bnsbc_custom_classes_field[text_string]' size='40' type='text' value='{$options['text_string']}' />";
 }
 
-// validate our options
-function plugin_options_validate( $input ) {
-    $options = get_option( 'plugin_options' );
+/**
+ * BNSBC Custom Classes Validator
+ * Validate the data entered for the option
+ *
+ * @package     BNS_Body_Classes
+ * @subpackage  BNSBC_Options
+ *
+ * @uses        get_option
+ */
+function bnsbc_custom_classes_validator( $input ) {
+    $options = get_option( 'bnsbc_custom_classes_field' );
     $options['text_string'] = trim( $input['text_string'] );
     return $options;
 }
 
 /**
  * BNS Body Classes Option Classes
- *
  * Add classes set in the BNS Body Classes Options page
  *
  * @since   0.2
@@ -84,20 +143,24 @@ function plugin_options_validate( $input ) {
  *
  * @version 0.2.1
  * Corrected issue with initial empty array being fed to the `implode` function
+ *
+ * @version 0.4
+ * @date    December 12, 2012
+ * Added conditional check on `option_classes`
  */
 function bnsbc_option_classes( $classes ) {
-    $option_classes = get_option( 'plugin_options' );
-    // Add something to the array so implode does not implode if the array is empty
-    // @todo Write a better fix
-    $option_classes[] = ' ';
-    // Convert array to string
-    $added_classes = strtolower( implode( ' ', $option_classes ) );
-    // Replace commas with spaces
-    $added_classes = preg_replace( '/[,]/', ' ', $added_classes );
-    // Replace multiple spaces with a single space
-    $added_classes = preg_replace('/  +/', ' ', $added_classes );
-    // Add to $classes and return
-    $classes[] = $added_classes;
+    $option_classes = get_option( 'bnsbc_custom_classes_field' );
+    if ( $option_classes ) {
+        /** Convert array to string */
+        $added_classes = strtolower( implode( ' ', $option_classes ) );
+        /** Replace commas with spaces */
+        $added_classes = preg_replace( '/[,]/', ' ', $added_classes );
+        /** Replace whitespace with a single space */
+        $added_classes = preg_replace( '/\s\s+/', ' ', $added_classes );
+        /** Add to $classes and return */
+        $classes[] = $added_classes;
+    }
+
     return $classes;
 }
 add_filter( 'body_class', 'bnsbc_option_classes' );
