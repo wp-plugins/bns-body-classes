@@ -29,7 +29,12 @@
  * @date        April 1, 2013
  * Code formatting and code block termination comments
  *
+ * @version     0.6
+ * @date        July 14, 2013
+ * Refactored init functions into their own their own method to be called
+ *
  * @todo Sort out validations required (CSS class cannot start with a number, etc.)
+ * @todo Add checkbox options for the Calendar related classes
  */
 
 /**
@@ -96,12 +101,29 @@ function bnsbc_options_page() { ?>
  * @package     BNS_Body_Classes
  * @subpackage  BNS_Options
  *
+ * @uses        add_bnsbc_custom_classes
+ */
+function bnsbc_admin_init() {
+    /** Add BNSBC Custom Classes */
+    add_bnsbc_custom_classes();
+
+} /** End function - admin init */
+add_action( 'admin_init', 'bnsbc_admin_init' );
+
+
+/**
+ * Add BNSBC Custom Classes
+ * Add option settings, sections, and inputs for custom classes
+ *
+ * @package     BNS_Body_Classes
+ * @subpackage  BNS_Options
+ *
  * @uses        __
  * @uses        add_settings_field
  * @uses        add_settings_section
  * @uses        register_setting
  */
-function bnsbc_admin_init() {
+function add_bnsbc_custom_classes() {
     /** Add Custom Classes Option */
     register_setting(
         'bnsbc_custom_classes',
@@ -121,8 +143,7 @@ function bnsbc_admin_init() {
         'bnsbc',
         'add_custom_classes'
     );
-} /** End function - admin init */
-add_action( 'admin_init', 'bnsbc_admin_init' );
+} /** End function - add bnsbc custom classes */
 
 
 /**
@@ -135,7 +156,7 @@ add_action( 'admin_init', 'bnsbc_admin_init' );
  * @uses        __
  */
 function add_custom_classes_text() {
-    $text = 'Enter your custom classes into the text field and click the "Save Changes" button.';
+    $text = 'Enter your custom classes (separated by commas) into the text field and click the "Save Changes" button.';
     printf( __( '<p>%1$s</p>', 'bns-bc' ), $text );
 } /** End function - add custom classes text */
 
