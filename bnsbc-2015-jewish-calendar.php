@@ -1,11 +1,11 @@
 <?php
 /**
- * BNS Body Classes Calendar Extension - Christian Calendar
- * Christian calendar for the year 2013
+ * BNS Body Classes Calendar Extension - Jewish Calendar
+ * Jewish calendar for the year 2015
  *
  * @package     BNS_Body_Classes
- * @subpackage  BNSBC_Christian_Calendar
- * @since       0.5
+ * @subpackage  BNSBC_Calendar
+ * @since       0.7
  *
  * @link        http://buynowshop.com/plugins/bns-body-classes/
  * @link        https://github.com/Cais/bns-body-classes/
@@ -36,133 +36,116 @@
  */
 
 /**
- * BNSBC Christian Calendar
+ * BNSBC Jewish Calendar
  *
  * @package     BNS_Body_Classes
- * @subpackage  BNSBC_Christain_Calendar
- * @since       0.5
+ * @subpackage  BNSBC_Calendar
+ * @since       0.7
  *
- * @internal    Dates are relevant to the year 2013
+ * @internal    Dates are relevant to the year 2014
  *
  * @param       $classes - existing body classes
  *
  * @return      string - classes as defined by dates
- *
- * @version     0.5.2
- * @date        April 9, 2013
- * Added $classes parameter to be able to append new date classes to
- *
- * @version     0.6
- * @date        April 15, 2013
- * Add conditional check to only add if there are actual dates being recognized
  */
-function bnsbc_christian_calendar( $classes ) {
+function bnsbc_jewish_calendar( $classes ) {
 	$dates = '';
 	/** January */
 	if ( '01' == date( 'm' ) ) {
-		if ( '06' == date( 'd' ) ) {
-			$dates .= ' epiphany';
+		if ( '26' == date( 'd' ) ) {
+			$dates .= ' tu-b-shevat arbor-day';
 		}
 	}
 	/** End if - January */
 
 	/** February */
 	if ( '02' == date( 'm' ) ) {
-		if ( '12' == date( 'd' ) ) {
-			$dates .= ' carnival shrove-tuesday';
-		}
-		if ( '13' == date( 'd' ) ) {
-			$dates .= ' ash-wednesday';
+		if ( '24' == date( 'd' ) ) {
+			$dates .= ' purim';
 		}
 	}
 	/** End if - February */
 
 	/** March */
 	if ( '03' == date( 'm' ) ) {
-		if ( '24' == date( 'd' ) ) {
-			$dates .= ' palm-sunday';
-		}
-		if ( '28' == date( 'd' ) ) {
-			$dates .= ' maundy-thursday';
-		}
-		if ( '29' == date( 'd' ) ) {
-			$dates .= ' good-friday';
-		}
-		if ( '30' == date( 'd' ) ) {
-			$dates .= ' holy-saturday';
-		}
-		if ( '31' == date( 'd' ) ) {
-			$dates .= ' easter-sunday';
+		if ( '26' == date( 'd' ) ) {
+			$dates .= ' first-day-of-passover';
 		}
 	}
 	/** End if - March */
 
 	/** April */
 	if ( '04' == date( 'm' ) ) {
-		if ( '01' == date( 'd' ) ) {
-			$dates .= ' easter-monday';
+		if ( '02' == date( 'd' ) ) {
+			$dates .= ' last-day-of-passover';
+		}
+		if ( '08' == date( 'd' ) ) {
+			$dates .= ' yom-hashoah';
+		}
+		if ( '16' == date( 'd' ) ) {
+			$dates .= ' yom-haatzmaut';
+		}
+		if ( '28' == date( 'd' ) ) {
+			$dates .= ' lag-b-omer';
 		}
 	}
 	/** End if - April */
 
 	/** May */
 	if ( '05' == date( 'm' ) ) {
-		if ( '09' == date( 'd' ) ) {
-			$dates .= ' ascension-day';
-		}
-		if ( '19' == date( 'd' ) ) {
-			$dates .= ' pentecost';
-		}
-		if ( '20' == date( 'd' ) ) {
-			$dates .= ' whit-monday';
-		}
-		if ( '26' == date( 'd' ) ) {
-			$dates .= ' trinity-sunday';
-		}
-		if ( '30' == date( 'd' ) ) {
-			$dates .= ' corpus-christi';
+		if ( '15' == date( 'd' ) ) {
+			$dates .= ' shavuot';
 		}
 	}
 	/** End if - May */
 
-	/** August */
-	if ( '08' == date( 'm' ) ) {
-		if ( '15' == date( 'd' ) ) {
-			$dates .= ' assumption-of-mary';
+	/** July */
+	if ( '07' == date( 'm' ) ) {
+		if ( '16' == date( 'd' ) ) {
+			$dates .= ' tisha-b-av';
 		}
 	}
-	/** End if - August */
+	/** End if - July */
 
-	/** October */
-	if ( '10' == date( 'm' ) ) {
-		if ( '04' == date( 'd' ) ) {
-			$dates .= ' feast-of-st-francis-of-assisi';
+	/** September */
+	if ( '09' == date( 'm' ) ) {
+		if ( '05' == date( 'd' ) ) {
+			$dates .= ' rosh-hashana';
+		}
+		if ( '14' == date( 'd' ) ) {
+			$dates .= ' yom-kippur';
+		}
+		if ( '19' == date( 'd' ) ) {
+			$dates .= ' first-day-of-sukkot';
+		}
+		if ( '25' == date( 'd' ) ) {
+			$dates .= ' last-day-of-sukkot';
+		}
+		if ( '26' == date( 'd' ) ) {
+			$dates .= ' shmini-atzeret simchat-torah';
 		}
 	}
-	/** End if - October */
+	/** End if - September */
 
 	/** November */
 	if ( '11' == date( 'm' ) ) {
-		if ( '02' == date( 'd' ) ) {
-			$dates .= ' all-souls-day';
+		if ( '28' == date( 'd' ) ) {
+			$dates .= ' first-day-of-hanukkah';
 		}
 	}
 	/** End if - November */
 
 	/** December */
 	if ( '12' == date( 'm' ) ) {
-		if ( '08' == date( 'd' ) ) {
-			$dates .= ' feast-of-the-immaculate-conception';
-		}
-		if ( '25' == date( 'd' ) ) {
-			$dates .= ' christmas';
+		if ( '05' == date( 'd' ) ) {
+			$dates .= ' last-day-of-hanukkah';
 		}
 	}
 	/** End if - December */
 
 	/** Note to, er class for, self */
 	if ( ! empty( $dates ) ) {
-		$dates .= ' bnsbc-christian-calendar';
+		$dates .= ' bnsbc-jewish-calendar';
 		$classes .= $dates;
 	}
 
@@ -174,8 +157,8 @@ function bnsbc_christian_calendar( $classes ) {
 
 }
 
-/** End function - christian calendar */
+/** End function - bnsbc calendar */
 
 
 /** Add to hook in parent plugin BNS Body Classes */
-add_filter( 'bnsbc_more_classes', 'bnsbc_christian_calendar' );
+add_filter( 'bnsbc_more_classes', 'bnsbc_jewish_calendar' );

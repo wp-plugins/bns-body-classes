@@ -1,11 +1,11 @@
 <?php
 /**
  * BNS Body Classes Calendar Extension - Christian Calendar
- * Christian calendar for the year 2013
+ * Christian calendar for the year 2015
  *
  * @package     BNS_Body_Classes
  * @subpackage  BNSBC_Christian_Calendar
- * @since       0.5
+ * @since       0.7
  *
  * @link        http://buynowshop.com/plugins/bns-body-classes/
  * @link        https://github.com/Cais/bns-body-classes/
@@ -36,25 +36,17 @@
  */
 
 /**
- * BNSBC Christian Calendar
+ * BNSBC Christian Calendar for 2015
  *
  * @package     BNS_Body_Classes
  * @subpackage  BNSBC_Christain_Calendar
- * @since       0.5
+ * @since       0.7
  *
- * @internal    Dates are relevant to the year 2013
+ * @internal    Dates are relevant to the year 2014
  *
  * @param       $classes - existing body classes
  *
  * @return      string - classes as defined by dates
- *
- * @version     0.5.2
- * @date        April 9, 2013
- * Added $classes parameter to be able to append new date classes to
- *
- * @version     0.6
- * @date        April 15, 2013
- * Add conditional check to only add if there are actual dates being recognized
  */
 function bnsbc_christian_calendar( $classes ) {
 	$dates = '';
@@ -166,7 +158,7 @@ function bnsbc_christian_calendar( $classes ) {
 		$classes .= $dates;
 	}
 
-	/** End if - not empty */
+	/** end if - not empty */
 
 	/** Return the classes added above */
 
