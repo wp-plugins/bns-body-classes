@@ -3,8 +3,8 @@ Contributors: cais
 Donate Link: http://buynowshop.com/
 Tags: CSS, body, plugin-only, holidays, seasonal, observances, calendar
 Requires at least: 3.0
-Tested Up To: 4.0
-Stable Tag: 0.7.1
+Tested Up To: 4.1
+Stable Tag: 0.8
 License: GNU General Public License v2
 License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -54,6 +54,8 @@ Included with the package is the file named 'bnsbc-calendar-sample.php'; simply 
 As the specifically named file 'bnsbc-calendar.php' is not included with the standard plugin package it should survive any automatic updates via the WordPress Administration Panels.
 Just in case, it is recommended to keep a backup of your custom calendar in case it is lost from your site for whatever reason.
 
+This file should also be saved under /wp-content/bns-customs/ as the safest update location.
+
 = How do I add a new class in the calendar extension? =
 After changing the sample file to 'bnsbc-calendar.php' simple find the date you want to add the class to and amend that line.
 
@@ -92,6 +94,14 @@ No screenshots are available.
 Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 0.8 =
+* Released December 2014
+* Added paths to `/bns-content/` for customizations
+* Added update safe location for custom calendars
+* Changed Text Domain from `bns-bc` to `bns-body-classes`
+* Removed 2013 calendars and references
+* Updated `readme.txt` to reference update safe location/folder
+
 = 0.7.1 =
 * Released May 2014
 * Update version compatibility
